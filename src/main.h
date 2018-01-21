@@ -45,6 +45,8 @@ static const int STAKE_TARGET_SPACING = 2.5 * 60; // 2.5-minute block spacing
 static const int STAKE_MIN_AGE = 60 * 60 * 24 * 30; // minimum age for coin age 5 days
 static const int STAKE_MAX_AGE = 60 * 60 * 24 * 365 * 65; // stake age of full weight 65 years
 
+static const unsigned int FORK_TIME = 2524608000; // Sat, 01 Jan 2050 00:00:00 GMT // to be changed with actual date
+
 #ifdef USE_UPNP
 static const int fHaveUPnP = true;
 #else
