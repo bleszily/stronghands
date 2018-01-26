@@ -934,16 +934,20 @@ uint256 WantedByOrphan(const CBlock* pblockOrphan)
 
 int64 GetProofOfWorkReward(unsigned int nBits)
 {
+    int64 nMaxMintProofOfWork = 0;
     
     if (nBestHeight <= 900000)
     {
-    CBigNum bnSubsidyLimit = MAX_MINT_PROOF_OF_WORK;
+    nMaxMintProofOfWork = MAX_MINT_PROOF_OF_WORK;
     }
     
     else if (nBestHeight > 900000)
     {
-    CBigNum bnSubsidyLimit = MAX_MINT_PROOF_OF_WORK_2;
+    nMaxMintProofOfWork = MAX_MINT_PROOF_OF_WORK_2;
     }
+    
+    CBigNum bnSubsidyLimit = nMaxMintProofOfWork;
+
         
     CBigNum bnTarget;
     bnTarget.SetCompact(nBits);
@@ -971,36 +975,35 @@ int64 GetProofOfWorkReward(unsigned int nBits)
     if (fDebug && GetBoolArg("-printcreation"))
         printf("GetProofOfWorkReward() : create=%s nBits=0x%08x nSubsidy=%" PRI64d "\n", FormatMoney(nSubsidy).c_str(), nBits, nSubsidy);
 
-    return min(nSubsidy, MAX_MINT_PROOF_OF_WORK);
+    return min(nSubsidy, nMaxMintProofOfWork);
 }
 
 // stronghands: miner's coin stake is rewarded based on coin age spent (coin-days)
 int64 GetProofOfStakeReward(int64 nCoinAge)
 {
     static int64 nRewardCoinYear = 1200 * CENT;  // creation amount per coin-year
+	int64 nSubsidy = nCoinAge * 33 / (365 * 33 + 8) * nRewardCoinYear;
 
-	if (nBestHeight <= 900000)   // to be changed, 3 months more of 1200%
+	if (nBestHeight <= 900000)   // height to be changed, 3 months more of 1200%
 	{
 	    int64 nSubsidy = nCoinAge * 33 / (365 * 33 + 8) * nRewardCoinYear;
 	}
 	
-	else if (nBestHeight <= (900100)   // to be changed, 2 months of 600%
+	else if (nBestHeight <= (900100)   // height to be changed, 1 month of 500,000
 	{
-	    int64 nSubsidy = nCoinAge * 33 / (365 * 33 + 8) * nRewardCoinYear / 2;
+	    int64 nSubsidy = 500000 * COIN;
 	}
 		
-	else if (nBestHeight <= (900200)   //  to be changed, 1 month of 300%
+	else if (nBestHeight <= (900200)   //  height to be changed, 1 month of 250,000
 	{
-	    int64 nSubsidy = nCoinAge * 33 / (365 * 33 + 8) * nRewardCoinYear / 4;
+	    int64 nSubsidy = 250000 * COIN;
 	}		
 	
-	
-	else if (nBestHeight > (900300)   // to be changed, static rewards for ever
+	else if (nBestHeight > (900200)   // height to be changed, static rewards for ever
 	{
-	    int64 nSubsidy = 2000000 * COIN;
-	}
-	
-	    strMotivational = "Wow, BRUH you just staked!";
+	    int64 nSubsidy = 50000 * COIN;
+	}	
+//	    strMotivational = "Wow, BRUH you just staked!";
     if (fDebug && GetBoolArg("-printcreation"))
         printf("GetProofOfStakeReward(): create=%s nCoinAge=%" PRI64d "\n", FormatMoney(nSubsidy).c_str(), nCoinAge);
     return nSubsidy;

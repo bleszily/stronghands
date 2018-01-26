@@ -46,9 +46,9 @@ static const int COINBASE_MATURITY_PPC = 100;
 // Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp.
 static const int LOCKTIME_THRESHOLD = 500000000; // Tue Nov  5 00:53:20 1985 UTC
 static const int STAKE_TARGET_SPACING = 2.5 * 60; // 2.5-minute block spacing
-static const int STAKE_MIN_AGE = 60 * 60 * 24 * 30; // minimum age for coin age 5 days
+static const int STAKE_MIN_AGE = 60 * 60 * 24 * 30; // minimum age for coin age 30 days
 static const int STAKE_MAX_AGE = 60 * 60 * 24 * 365 * 65; // stake age of full weight 65 years
-static const int STAKE_MAX_AGE_2 = 60 * 60 * 24 * 365; // stake age of full weight 1 years
+static const int STAKE_MAX_AGE_2 = 60 * 60 * 24 * 120; // stake age of full weight 120 days
 
 
 
